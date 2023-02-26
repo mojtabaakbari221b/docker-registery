@@ -22,7 +22,7 @@ python3 setup.py
 docker-compose up --build -d
 ```
 
-## Add another user to docker registry
+### Add another user to docker registry
 run add_user_to_registry.py and enter new username and password.
 
 #### Link:
