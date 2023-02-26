@@ -1,3 +1,4 @@
 auth/
 nginx.conf.tmp
+registry_ui.nginx.conf.tmp
 .env

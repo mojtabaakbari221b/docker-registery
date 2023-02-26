@@ -20,9 +20,10 @@ def create_nginx_conf_and_copy_to_nginx_confd_folder(domain):
         with open('nginx.conf.tmp', 'w') as tmp_nginx_file :
             tmp_nginx_file.write(data)
         
-        os.system(f'sudo cp nginx.conf.tmp /etc/nginx/conf.d/{domain}.conf')
-        os.system(f'rm nginx.conf.tmp')
-        os.system(f'sudo systemctl restart nginx')
+        if not os.path.exists(f'/etc/nginx/conf.d/{domain}.conf'):
+            os.system(f'sudo cp nginx.conf.tmp /etc/nginx/conf.d/{domain}.conf')
+            os.system(f'rm nginx.conf.tmp')
+            os.system(f'sudo systemctl restart nginx')
 
 def get_docker_registry_username_and_password():
     return input("Enter docker registry username: "), getpass(prompt="Enter docker registry Password: ")
@@ -73,9 +74,10 @@ def create_registeryui_nginx_conf_and_copy_to_nginx_confd_folder(registeryui_dom
         with open('registry_ui.nginx.conf.tmp', 'w') as tmp_nginx_file :
             tmp_nginx_file.write(data)
         
-        os.system(f'sudo cp registry_ui.nginx.conf.tmp /etc/nginx/conf.d/{registeryui_domain}.conf')
-        os.system(f'rm registry_ui.nginx.conf.tmp')
-        os.system(f'sudo systemctl restart nginx')
+        if not os.path.exists(f'/etc/nginx/conf.d/{registeryui_domain}.conf'):
+            os.system(f'sudo cp registry_ui.nginx.conf.tmp /etc/nginx/conf.d/{registeryui_domain}.conf')
+            os.system(f'rm registry_ui.nginx.conf.tmp')
+            os.system(f'sudo systemctl restart nginx')
 
 
 if __name__ == "__main__" :
