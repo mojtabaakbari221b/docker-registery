@@ -57,6 +57,26 @@ def create_registry_ui_env(registry_ui_username, registry_ui_password, registry_
         with open('.env', 'w') as env_file :
             env_file.write(data)
 
+def get_registeryui_domain():
+    registeryui_domain = None
+
+    while not registeryui_domain :
+        registeryui_domain = input("Enter registery ui domain name: ")
+    
+    return registeryui_domain
+
+def create_registeryui_nginx_conf_and_copy_to_nginx_confd_folder(registeryui_domain):
+    with open('registry_ui.nginx.conf', 'r') as nginx_conf :
+        data = nginx_conf.read()
+        data = data.replace('$ENTER_YOUR_DOMAIN', registeryui_domain)
+
+        with open('registry_ui.nginx.conf.tmp', 'w') as tmp_nginx_file :
+            tmp_nginx_file.write(data)
+        
+        os.system(f'sudo cp registry_ui.nginx.conf.tmp /etc/nginx/conf.d/{registeryui_domain}.conf')
+        os.system(f'rm registry_ui.nginx.conf.tmp')
+        os.system(f'sudo systemctl restart nginx')
+
 
 if __name__ == "__main__" :
     domain = get_domain()
@@ -75,3 +95,6 @@ if __name__ == "__main__" :
         registry_username,
         registry_password,
     )
+
+    registeryui_domain = get_registeryui_domain()
+    create_registeryui_nginx_conf_and_copy_to_nginx_confd_folder(registeryui_domain)
