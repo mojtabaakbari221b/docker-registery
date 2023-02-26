@@ -31,6 +31,40 @@ you can set lts with cerbot:
 sudo certbot --nginx
 ```
 
+## Publishing to Your Private Docker Registry
+Now that your Docker Registry server is up and running, and accepting large file sizes, you can try pushing an image to it.
+
+The new image is now available locally, and you’ll push it to your new container registry. First, you have to log in:
+```
+docker login https://your_domain
+```
+When prompted, enter in a username and password combination that you’ve defined in setup script.
+
+The output will be: **Login Succeeded**.
+
+Once you’re logged in, rename the created image:
+```
+docker tag test-image your_domain/test-image
+```
+
+Finally, push the newly tagged image to your registry:
+```
+docker push your_domain/test-image
+```
+
+## Pulling From Your Private Docker Registry
+Now that you’ve pushed an image to your private registry, you’ll try pulling from it.
+
+On the main server, log in with the username and password you set up previously:
+```
+docker login https://your_domain
+```
+
+Try pulling the test-image by running:
+```
+docker pull your_domain/test-image
+```
+
 
 #### Link:
 you can custom your setup with this link: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-private-docker-registry-on-ubuntu-20-04
