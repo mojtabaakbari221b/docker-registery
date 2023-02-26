@@ -16,6 +16,7 @@ python3 setup.py
 * enter your domain, if you are in local, enter localhost, else enter your valid domain name.
 * enter your password if required for copy nginx file to nginx conf.d folder.
 * enter your username and password for docker registry, script use this for set on docker registry, it is used in push and pull from docker private registry, don't forgot it.
+* enter your username and password for docker registry ui, script use this for set on docker registry ui, it is used in login to registry ui.
 
 2. up docker containers:
 ```
