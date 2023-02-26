@@ -25,5 +25,12 @@ docker-compose up --build -d
 ### Add another user to docker registry
 run add_user_to_registry.py and enter new username and password.
 
+### lts for domain
+you can set lts with cerbot:
+```
+sudo certbot --nginx
+```
+
+
 #### Link:
 you can custom your setup with this link: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-private-docker-registry-on-ubuntu-20-04
