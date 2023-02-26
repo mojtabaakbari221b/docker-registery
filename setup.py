@@ -25,16 +25,53 @@ def create_nginx_conf_and_copy_to_nginx_confd_folder(domain):
         os.system(f'sudo systemctl restart nginx')
 
 def get_docker_registry_username_and_password():
-    return input("Enter docker registry username: "), getpass()
+    return input("Enter docker registry username: "), getpass(prompt="Enter docker registry Password: ")
 
-def create_auth_password(username, password):
+def create_auth_password(registry_username, registry_password):
     os.system('mkdir -p auth')
-    os.system(f'htpasswd -bBc auth/registry.password {username} {password}')
+    os.system(f'htpasswd -bBc auth/registry.password {registry_username} {registry_password}')
+
+def get_docker_registry_ui_username_and_password():
+    return input("Enter docker registry ui username: "), getpass(prompt="Enter docker registry ui Password: ")
+
+def create_registry_ui_env(registry_ui_username, registry_ui_password, registry_username, registry_password):
+    with open('.env.sample', 'r') as env_sample_file :
+        data = env_sample_file.read()
+        data = data.replace(
+            'RGY_UI_USERNAME',
+            registry_ui_username,
+        )
+        data = data.replace(
+            'RGY_UI_PASSWORD',
+            registry_ui_password,
+        )
+        data = data.replace(
+            'RGY_USERNAME',
+            registry_username,
+        )
+        data = data.replace(
+            'RGY_PASSWORD',
+            registry_password,
+        )
+
+        with open('.env', 'w') as env_file :
+            env_file.write(data)
 
 
 if __name__ == "__main__" :
     domain = get_domain()
     create_nginx_conf_and_copy_to_nginx_confd_folder(domain)
 
-    username, password = get_docker_registry_username_and_password()
-    create_auth_password(username, password)
+    registry_username, registry_password = get_docker_registry_username_and_password()
+    create_auth_password(
+        registry_username,
+        registry_password,
+    )
+
+    registry_ui_username, registry_ui_password = get_docker_registry_ui_username_and_password()
+    create_registry_ui_env(
+        registry_ui_username, 
+        registry_ui_password,
+        registry_username,
+        registry_password,
+    )
