@@ -4,6 +4,8 @@
 
 you should install **nginx**, and **htpasswd** package for serve docker registry and create bcrypted password.
 
+if you wanna install automatically, run install_requirements.py script.
+
 ### Installation
 
 for setup docker registry on your machine or server, after clone from repo, run setup script:
