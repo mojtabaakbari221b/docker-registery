@@ -22,7 +22,7 @@ def create_nginx_conf_and_copy_to_nginx_confd_folder(domain):
         
         os.system(f'sudo cp nginx.conf.tmp /etc/nginx/conf.d/{domain}.conf')
         os.system(f'rm nginx.conf.tmp')
-        os.system(f'sudo systemctl reload nginx')
+        os.system(f'sudo systemctl restart nginx')
 
 def get_docker_registry_username_and_password():
     return input("Enter docker registry username: "), getpass()
